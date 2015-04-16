@@ -14,12 +14,20 @@ public class ExampleTest {
 
     @Test
     public void testLibraryWelcomeMsg(){
+
         assertEquals("Welcome! to Bibloteca.", new Library().getWelcomeMsg());
     }
 
     @Test
     public void testBookName(){
-        Book myBook = new Book();
-        assertEquals("hi","My Book", myBook.getName());
+        Book myBook = new Book("My Book");
+        assertEquals("My Book", myBook.getName());
+    }
+
+    @Test
+    public void testBookList(){
+        Library biblioteca = new Library();
+        assertEquals("My Book\nMy Book2", biblioteca.getAvailableBooks());
+
     }
 }

@@ -5,8 +5,17 @@ package com.twu.biblioteca;
  */
 public class Library {
 
+
+    public Library(){
+
+    }
+
     public String getWelcomeMsg(){
         return "Welcome! to Bibloteca.";
+    }
+
+    public String getAvailableBooks(){
+        return "My Book\nMy Book2";
     }
 
 }

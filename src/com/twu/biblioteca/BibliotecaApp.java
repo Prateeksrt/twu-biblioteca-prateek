@@ -6,12 +6,4 @@ public class BibliotecaApp {
 
         System.out.println("Hello, world!");
     }
-
-    private void start(){
-
-    }
-
-    private String getWelcomeMsg(){
-        return "Welcome to Biblioteca!";
-    }
 }
