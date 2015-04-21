@@ -17,7 +17,7 @@ public class Library {
 
     public String checkOut(int bookNumber){
         try {
-            transferBookForAvailableToIssued(bookNumber - 1);
+            transferBookFromAvailableToIssued(bookNumber - 1);
             return "Thank you! Enjoy the book";
         } catch (Exception e){
             return "That book is not available.";
@@ -27,7 +27,7 @@ public class Library {
     public String returnBook(final String bookName){
         Book bookToReturn = getIssuedBookByName(bookName);
         if(bookToReturn!=null){
-            transferBookForIssuedToAvailable(bookToReturn);
+            transferBookFromIssuedToAvailable(bookToReturn);
             return "Thank you for returning the book.";
         }
         return "That is not a valid book to return.";
@@ -53,12 +53,12 @@ public class Library {
 
     }
 
-    private void transferBookForIssuedToAvailable(Book issuedBook){
+    private void transferBookFromIssuedToAvailable(Book issuedBook){
         issuedBooks.remove(issuedBook);
         availableBooks.add(issuedBook);
     }
 
-    private void transferBookForAvailableToIssued(int bookNumber) {
+    private void transferBookFromAvailableToIssued(int bookNumber) {
         Book toBeIssued = availableBooks.remove(bookNumber);
         issuedBooks.add(toBeIssued);
     }
