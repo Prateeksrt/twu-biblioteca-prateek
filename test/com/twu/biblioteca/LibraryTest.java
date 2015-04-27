@@ -37,7 +37,7 @@ public class LibraryTest {
     public void testGetAvailableServices() throws Exception {
 
         List<String> services = biblioteca.getAvailableServices();
-        assertEquals("[List All books, Return Book]",services.toString());
+        assertEquals("[List all books, Return Book, List all movies]",services.toString());
     }
 
     @Test
@@ -82,5 +82,20 @@ public class LibraryTest {
         String expectedString = "That is not a valid book to return.";
         biblioteca.checkOut(2);
         assertEquals(expectedString, biblioteca.returnBook("My Book9"));
+    }
+
+    @Test
+    public void test_Get_Available_Movies(){
+        String expectedString = "[Name : Furious 8, Year : 2015, Director : prateek, Rating : 5, " +
+                "Name : Matrix, Year : 2000, Director : richi, Rating : 10, " +
+                "Name : LOTR, Year : 2003, Director : pooja, Rating : not rated]";
+        assertEquals(expectedString,biblioteca.getAvailableMovies().toString());
+    }
+
+    @Test
+    public void test_Check_Out_Movie(){
+        String exceptedMsg = "Thank you! Enjoy the movie";
+        String msg = biblioteca.checkOutMovie(2);
+        assertEquals(exceptedMsg, msg);
     }
 }

@@ -1,3 +1,4 @@
+//Responsibility of this class: User interaction bridge
 package com.twu.biblioteca;
 
 public class BibliotecaApp {
@@ -6,7 +7,8 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
 
-        new BibliotecaApp().run();
+        BibliotecaApp bibliotecaApp = new BibliotecaApp();
+        bibliotecaApp.run();
 
     }
 
@@ -31,8 +33,7 @@ public class BibliotecaApp {
 
         int userInput = askUserToSelectTheService();
         switch(userInput){
-            case -1:
-                return;
+
             case 1:
                 selectBook();
                 startLibraryServices();
@@ -40,6 +41,11 @@ public class BibliotecaApp {
             case 2:
                 returnBook();
                 startLibraryServices();
+                break;
+            case 3:
+                selectMovie();
+                startLibraryServices();
+                break;
         }
 
     }
@@ -65,6 +71,12 @@ public class BibliotecaApp {
         } else {
             System.out.println("That is not a valid book to return.");
         }
+    }
 
+    private void selectMovie(){
+        UI.printHeader("Select the Movie to check out :");
+        int input = UI.getUserInput(biblioteca.getAvailableMovies());
+        if(input<=0) return;
+        System.out.println(biblioteca.checkOutMovie(input));
     }
 }
