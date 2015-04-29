@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 public class UI {
 
@@ -20,7 +21,7 @@ public class UI {
         return printableMenu;
     }
 
-    private static <E> boolean isValidSelection(List<E> menu, int selectedIndex){
+    public static <E> boolean isValidSelection(List<E> menu, int selectedIndex){
         final boolean isZeroOrGreater = selectedIndex >= 0;
         final boolean isMenuSizeOrLess = selectedIndex <= menu.size();
         return isZeroOrGreater && isMenuSizeOrLess;
@@ -33,6 +34,10 @@ public class UI {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public static int getSelectedInput(){
+        return 1;
     }
 
     public static void printBlock(String msg){
@@ -71,4 +76,6 @@ public class UI {
         System.out.println(ERR_MSG_INVALID_SELECTION);
         return getUserInput(menuToChooseFrom);
     }
+
+    public static BiPredicate<List,Integer> isValidMenuSelection = (list,index) -> index>0 && index <= list.size();
 }

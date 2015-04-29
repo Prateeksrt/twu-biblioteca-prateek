@@ -1,8 +1,5 @@
 package com.twu.biblioteca;
 
-/**
- * Created by prateeks on 4/27/15.
- */
 public class User {
     private String libraryNumber;
     private String password;

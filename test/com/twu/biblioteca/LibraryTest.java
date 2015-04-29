@@ -8,94 +8,92 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class LibraryTest {
+
+    private final static String availableBookString = "[Name : My Book, Author : xyz, Published in : 2000," +
+            " Name : My Book2, Author : abc, Published in : 2001," +
+            " Name : My Book3, Author : xyz, Published in : 2002]";
+
+    private final static String  availableServiceString = "[List all books, Return Book, List all movies]";
+
+    private final static String availableMovieString = "[Name : Furious 8, Year : 2015, Director : prateek, Rating : 5, " +
+            "Name : Matrix, Year : 2000, Director : richi, Rating : 10, " +
+            "Name : LOTR, Year : 2003, Director : pooja, Rating : not rated]";
     
     private Library biblioteca;
     
     @Before
     public void setUp(){
-        biblioteca = new Library();
+        biblioteca = LibRepository.getLibrary();
     }
 
     @Test
-    public void testGetWelcomeMsg() throws Exception {
+    public void test_Get_Welcome_Msg() throws Exception {
 
         assertEquals("Welcome! to Bibloteca.", biblioteca.getWelcomeMsg());
 
     }
 
     @Test
-    public void testGetAvailableBooks() throws Exception {
-        
-        String bookTestString = "[Name : My Book, Author : xyz, Published in : 2000," +
-                " Name : My Book2, Author : abc, Published in : 2001," +
-                " Name : My Book3, Author : xyz, Published in : 2002]";
-        assertEquals(bookTestString, biblioteca.getAvailableBooks().toString());
+    public void test_Get_Available_Books() throws Exception {
+
+        assertEquals(availableBookString, biblioteca.getAvailableBooks().toString());
 
     }
 
     @Test
-    public void testGetAvailableServices() throws Exception {
+    public void test_Get_Available_Services() throws Exception {
 
         List<String> services = biblioteca.getAvailableServices();
-        assertEquals("[List all books, Return Book, List all movies]",services.toString());
+        assertEquals(availableServiceString, services.toString());
+
+    }
+
+    @Test
+    public void test_return_book_wrong_book_test(){
+        assertFalse(biblioteca.returnBook("ramu"));
     }
 
     @Test
     public void testBookCheckOut() {
-        biblioteca.checkOut(2);
-        String expectedString = "[Name : My Book, Author : xyz, Published in : 2000," +
-                " Name : My Book3, Author : xyz, Published in : 2002]";
-        assertEquals(expectedString, biblioteca.getAvailableBooks().toString());
+        assertTrue(biblioteca.checkOutBook("My Book"));
     }
 
     @Test
-    public void test_Book_Check_Out_SuccessFull_Message(){
-        String expectedString = "Thank you! Enjoy the book";
-        assertEquals(expectedString, biblioteca.checkOut(2));
+    public void testBookCheckOut_unsuccessful() {
+        assertFalse(biblioteca.checkOutBook("Not My Book"));
     }
 
     @Test
-    public void test_Book_Check_Out_Un_SuccessFull_Message(){
-        String expectedString = "That book is not available.";
-        assertEquals(expectedString, biblioteca.checkOut(4));
+    public void test_Book_Return_unsuccessful_when_no_book_issued(){
+        assertFalse(biblioteca.returnBook("My Book"));
     }
 
     @Test
-    public void test_Book_Return(){
-        String expectedString = "[Name : My Book, Author : xyz, Published in : 2000," +
-                " Name : My Book3, Author : xyz, Published in : 2002,"+
-                " Name : My Book2, Author : abc, Published in : 2001]";
-        biblioteca.checkOut(2);
-        biblioteca.returnBook("My Book2");
-        assertEquals(expectedString, biblioteca.getAvailableBooks().toString());
+    public void test_Book_Return_Successful(){
+        assertTrue(biblioteca.checkOutBook("My Book"));
+        assertTrue(biblioteca.returnBook("My Book"));
     }
 
     @Test
-    public void test_Book_Return_SuccessFully(){
-        String expectedString = "Thank you for returning the book.";
-        biblioteca.checkOut(2);
-        assertEquals(expectedString, biblioteca.returnBook("My Book2"));
-    }
-
-    @Test
-    public void test_Book_Return_Un_SuccessFully(){
-        String expectedString = "That is not a valid book to return.";
-        biblioteca.checkOut(2);
-        assertEquals(expectedString, biblioteca.returnBook("My Book9"));
+    public void test_Book_Return_Unsuccessful_wrong_book_name(){
+        assertTrue(biblioteca.checkOutBook("My Book"));
+        assertFalse(biblioteca.returnBook("My Booker"));
     }
 
     @Test
     public void test_Get_Available_Movies(){
-        String expectedString = "[Name : Furious 8, Year : 2015, Director : prateek, Rating : 5, " +
-                "Name : Matrix, Year : 2000, Director : richi, Rating : 10, " +
-                "Name : LOTR, Year : 2003, Director : pooja, Rating : not rated]";
-        assertEquals(expectedString,biblioteca.getAvailableMovies().toString());
+
+        assertEquals(availableMovieString,biblioteca.getAvailableMovies().toString());
+
     }
 
     @Test
-    public void test_Check_Out_Movie(){
-        String exceptedMsg = "Thank you! Enjoy the movie";
-        String msg = biblioteca.checkOutMovie(2);
-        assertEquals(exceptedMsg, msg);
+    public void test_Check_Out_Movie_successful(){
+        assertTrue(biblioteca.checkOutMovie("Matrix"));
+    }
+
+    @Test
+    public void test_Check_Out_Movie_unsuccessful(){
+        assertFalse(biblioteca.checkOutBook("matrix reloaded"));
     }
 }
